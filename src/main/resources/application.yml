@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: marketplace
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/marketplace}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:Nikita8321}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lilrik1328@gmail.com
+    password: imyk hpin rksd wsgu
+    properties:
+      "[mail.transport.protocol]": smtp
+      "[mail.smtp.auth]": true
+      "[mail.smtp.starttls.enable]": true
+      "[mail.debug]": false
+springdoc:
+  swagger-ui:
+    path: /index.html
+  api-docs:
+    path: /v1/api-docs
+    enabled: true
+  show-actuator: true
+  cache:
+    disabled: true
+
