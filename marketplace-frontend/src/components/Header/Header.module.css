@@ -1,0 +1,92 @@
+.main {
+    margin-top: 25px;
+    width: 60%;
+    max-width: 1080px;
+    min-width: 720px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: var(--main-color);
+    color: var(--font-main-color);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+.catalogue {
+    background-color: var(--button-color);
+    padding: 11px 16px;
+    width: 123px;
+    height: 40px;
+    color: var(--font-secondary-color);
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    border-radius: 6px;
+}
+
+.catalogue:hover {
+    color: var(--font-main-color);
+    background-color: var(--button-secondary-color);
+    transition: all var(--hover-animation-time);
+}
+
+.catalogue:hover svg path {
+    fill: var(--font-main-color);
+    transition: all var(--hover-animation-time);
+}
+
+.searchInputContainer {
+    position: relative;
+    min-width: fit-content;
+    width: 100%;
+
+}
+
+.searchInput {
+    padding: 12.5px 16px;
+    color: var(--input-placheholder-color);
+    border-radius: 8px;
+    border: none;
+    width: calc(100% - 32px);
+    min-width: 150px;
+}
+
+.searchInputSvg {
+    position: absolute;
+    right: 11px;
+    top: 12px;
+}
+
+.categoryButton {
+    color: var(--font-secondary-color);
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 32px;
+    justify-content: space-between;
+}
+
+.basket {
+    
+}
+
+.orders {
+    
+}
+
+.signInButton {
+    padding: 11px 0;
+    min-width: 150px;
+    max-width: 170px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 14px;
+}

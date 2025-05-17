@@ -1,0 +1,30 @@
+:root {
+    --bg-site-color: rgba(245, 245, 245, 1);
+    --main-color: rgba(104, 181, 31, 1);
+    --secondary-color: rgba(255, 255, 255, 1);
+    --font-main-color: rgba(0, 0, 0, 1);
+    --font-secondary-color: rgba(255, 255, 255, 1);
+    --button-color: rgba(111, 193, 32, 1);
+    --button-secondary-color: rgba(255, 255, 255, 1);
+    --input-placheholder-color: rgba(0, 0, 0, 0.5);
+    --hover-animation-time: 0.3s;
+    --background-shadinп-color: rgba(255, 255, 255, 0.55);
+}
+
+* {
+    font-family: var(--font-geologica);
+    font-weight: 400;
+}
+
+button {
+    border: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: var(--font-main-color);
+}

@@ -1,0 +1,158 @@
+/* .relativeCardContainer {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 10px;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.relativeCardContainer:hover .cardBorder {
+    display: block;
+}
+
+.relativeCardContainer:hover .price{
+    mix-blend-mode:screen;
+}
+
+.cardBorder {
+    display: none;
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(rgba(111, 193, 33, 1), rgba(255, 206, 10, 1));
+    animation: rotate-gradient 3s linear infinite;
+    top: -10%;
+    left: -70%;
+}
+
+@keyframes rotate-gradient {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cardContainer {
+    position: relative;
+    max-width: 17s0px;
+    max-height: 270px;
+    border-radius: 8px;
+}
+
+.cardContainer p {
+    margin: 0;
+}
+
+.cardImageContainer {
+    display: block;
+}
+
+.cardImageContainer, .title, .price {
+    position: relative;
+    background-color: var(--secondary-color);
+    
+}
+
+.price {
+    width: 150px;
+    font-size: 16px;
+    font-weight: 700;
+
+}
+
+.title {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+} */
+
+.cardBorder {
+    display: none;
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(rgba(111, 193, 33, 1), rgba(255, 206, 10, 1));
+    animation: rotate-gradient 3s linear infinite;
+    top: -20%;
+    left: -70%;
+}
+
+@keyframes rotate-gradient {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cardContainer {
+    position: relative;
+    max-width: 170px;
+    max-height: 313px;
+    border-radius: 11px;
+    overflow: hidden;
+    height: max-content;
+    box-sizing: border-box;
+    padding: 2px 2px;
+}
+
+.cardContainer:hover .cardBorder {
+    display: block;
+}
+
+.cardContainer:hover .price {
+    mix-blend-mode:screen;
+}
+
+.cardContainer p {
+    margin: 0;
+}
+
+.cardWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: max-content;
+    --border-radius: 10px;
+}
+
+.cardImageContainer {
+    padding-top: 5px;
+    padding-bottom: 7px;
+    width: 150px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    background-color: var(--secondary-color);
+}
+
+.cardImage {
+    border-radius: var(--border-radius);
+}
+
+.title, .price {
+    width: 150px;
+    background-color: var(--secondary-color);
+}
+
+.price {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    border-radius:  0 0 var(--border-radius) var(--border-radius);
+}
+
+.cardImageContainer, .title, .price {
+    padding-right: 8px;
+    padding-left: 8px;
+}
