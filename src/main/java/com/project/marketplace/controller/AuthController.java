@@ -5,7 +5,7 @@ import com.project.marketplace.dto.auth.ConfirmOtpRequest;
 import com.project.marketplace.dto.auth.LoginRequest;
 import com.project.marketplace.dto.auth.LoginResponse;
 import com.project.marketplace.dto.auth.RegisterRequest;
-import com.project.marketplace.entity.User;
+import com.project.marketplace.dto.auth.UserResponse;
 import com.project.marketplace.service.AuthService;
 import com.project.marketplace.service.UserService;
 
@@ -41,6 +41,13 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponse(loginId, "OTP отправлен на почту"));
     }
 
+    @PostMapping("/logout")
+    @Operation(summary = "Выход из системы (invalidate session)")
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
+        authService.initiateLogout(request, response);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/confirm")
     @Operation(summary = "Подтверждение OTP и выдача токена сессии")
     public ResponseEntity<AuthResponse> confirmOtp(@RequestBody @Valid ConfirmOtpRequest confirmRequest,
@@ -58,8 +65,8 @@ public class AuthController {
 
     @PostMapping("/register")
     @Operation(summary = "Регистрация пользователя")
-    public ResponseEntity<User> register(@RequestBody @Valid RegisterRequest request) {
-        User user = userService.createUser(
+    public ResponseEntity<UserResponse> register(@RequestBody @Valid RegisterRequest request) {
+        UserResponse user = userService.createUser(
                 request.email(),
                 request.password(),
                 request.firstName(),
