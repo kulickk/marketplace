@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.UuidGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.marketplace.model.Gender;
+import com.project.marketplace.model.Role;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,6 +22,7 @@ public class User {
 
     @Id
     @GeneratedValue
+    @UuidGenerator
     @Column(columnDefinition = "UUID")
     private UUID id;
 
@@ -27,11 +30,25 @@ public class User {
     private String email;
 
     @Column(name = "password_hash", nullable = false)
-    @JsonIgnore
     private String passwordHash;
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Gender gender;    // MALE, FEMALE, NOT_STATED
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Role role;        // BUYER, SELLER, ADMIN
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "basket_id")
+    private Basket basket;
 
     @CreationTimestamp
     @Column(updatable = false)

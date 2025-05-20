@@ -8,8 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
+
 import java.time.Duration;
 import java.util.Map;
 import java.util.UUID;
@@ -48,6 +52,27 @@ public class AuthService {
 
         emailService.sendOtpEmail(user.getEmail(), otpCode);
         return loginId;
+    }
+
+    @Transactional
+    public void initiateLogout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Нет активной сессии");
+        }
+
+        String sessionId = session.getId();
+
+        session.invalidate();
+
+        String redisKey = "spring:session:sessions:" + sessionId;
+        redisTemplate.delete(redisKey);
+
+        Cookie cookie = new Cookie("SESSION", "");
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 
     public String confirmOtp(String loginId, String otp, HttpServletRequest request) {

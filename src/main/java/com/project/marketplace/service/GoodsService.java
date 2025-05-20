@@ -37,6 +37,18 @@ public class GoodsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<GoodResponse> getGoodsByCategory(UUID categoryId) {
+        // опционально: убедимся, что категория существует
+        if (!goodCategoryRepository.existsById(categoryId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Категория не найдена");
+        }
+
+        return goodsRepository.findByCategoryId(categoryId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public GoodResponse createGood(GoodRequest request) {
         GoodCategory category = goodCategoryRepository.findById(request.categoryId())

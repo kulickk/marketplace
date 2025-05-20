@@ -16,6 +16,16 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/marketplace
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
+  app-front:
+    build:
+      context: ./marketplace-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+    networks:
+      - back-tier
 
   redis:
     image: redis:7-alpine
