@@ -1,54 +1,54 @@
 package com.project.marketplace.controller;
 
-import com.project.marketplace.dto.auth.RegisterRequest;
-import com.project.marketplace.entity.User;
+import com.project.marketplace.dto.auth.UserResponse;
+import com.project.marketplace.dto.user.ChangePasswordRequest;
+import com.project.marketplace.dto.user.UpdateProfileRequest;
 import com.project.marketplace.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import java.util.UUID;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.constraints.NotNull;
-import org.springframework.validation.annotation.Validated;
-
 @RestController
-@RequestMapping("/api/users")
-@Validated
+@RequestMapping("/api/v1/users/me")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
-    @Operation(summary = "Регистрация пользователя")
-    public ResponseEntity<User> register(@RequestBody @Valid RegisterRequest request) {
-        User user = userService.createUser(
-                request.email(),
-                request.password(),
-                request.firstName(),
-                request.lastName());
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    /**
+     * Получение профиля текущего пользователя.
+     */
+    @GetMapping
+    @Operation(summary = "Получить профиль текущего пользователя")
+    public ResponseEntity<UserResponse> getMyProfile(HttpServletRequest request) {
+        UserResponse profile = userService.getProfile(request);
+        return ResponseEntity.ok(profile);
     }
 
-    @GetMapping("/id/{id}")
-    @Operation(summary = "Получить пользователя по ID")
-    public ResponseEntity<User> getUserById(
-            @Parameter(description = "UUID пользователя", example = "cb3e0f73-c81f-42f3-a96e-bb5934180150") @PathVariable("id") @NotNull UUID id) {
-        User user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+    /**
+     * Обновление имени, фамилии и пола.
+     */
+    @PatchMapping("/profile")
+    @Operation(summary = "Обновить имя, фамилию и пол пользователя")
+    public ResponseEntity<UserResponse> updateProfile(
+            HttpServletRequest request,
+            @RequestBody @Valid UpdateProfileRequest body) {
+        UserResponse updated = userService.updateProfile(request, body);
+        return ResponseEntity.ok(updated);
     }
 
-    @GetMapping("/email/{email}")
-    @Operation(summary = "Получить пользователя по Email")
-    public ResponseEntity<User> getUserByEmail(
-            @Parameter(description = "Email пользователя", example = "user@example.com") @PathVariable("email") @NotBlank @Email String email) {
-        User user = userService.getUserByEmail(email);
-        return ResponseEntity.ok(user);
+    /**
+     * Смена пароля: нужно указать старый и новый.
+     */
+    @PatchMapping("/password")
+    @Operation(summary = "Сменить пароль пользователя")
+    public ResponseEntity<Void> changePassword(
+            HttpServletRequest request,
+            @RequestBody @Valid ChangePasswordRequest body) {
+        userService.changePassword(request, body);
+        return ResponseEntity.noContent().build();
     }
 }

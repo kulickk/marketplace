@@ -34,6 +34,14 @@ public class GoodsController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/category/{categoryId}")
+    @Operation(summary = "Получение товаров по ID категории")
+    public ResponseEntity<List<GoodResponse>> getGoodsByCategory(
+            @PathVariable("categoryId") UUID categoryId) {
+        List<GoodResponse> responses = goodsService.getGoodsByCategory(categoryId);
+        return ResponseEntity.ok(responses);
+    }
+
     @PostMapping
     @Operation(summary = "Создание товара")
     public ResponseEntity<GoodResponse> createGood(@RequestBody @Valid GoodRequest request) {
