@@ -1,12 +1,21 @@
-const escHandler = (callback) => {
-    const escKeydownHandler = (evt) => {
-        console.log(12345);
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        console.log(123);
+const addDommenToApi = (apiObj, dommen) => {
+    const processed = {};
+
+    for (const key in apiObj) {
+        const value = apiObj[key];
+
+        if (typeof value === 'string') {
+            processed[key] = dommen + value;
+        } else if (typeof value === 'function') {
+            processed[key] = (...args) => dommen + value(...args);
+        } else if (typeof value === 'object' && value !== null) {
+            processed[key] = addDommenToApi(value, dommen);
+        } else {
+            processed[key] = value;
+        }
     }
-    return escKeydownHandler;
-};
+
+    return processed;
 };
 
-export {escHandler};
+export {addDommenToApi};

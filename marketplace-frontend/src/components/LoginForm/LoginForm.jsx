@@ -2,8 +2,10 @@
 import { useEffect, useState } from 'react';
 import styles from './LoginForm.module.css'
 import Image from 'next/image';
+import { sendCode } from './requests';
 
 const LoginForm = ({onClose, onLogin}) => {
+    const [email, setEmail] = useState('');
     const [codeWaiting, setCodeWaiting] = useState(false);
 
     const handleClickFormClose = (evt) => {
@@ -13,9 +15,13 @@ const LoginForm = ({onClose, onLogin}) => {
     };
 
     const handleLogin = () => {
-        // onClose();
-        // onLogin(true);
+        console.log(email);
+        sendCode(email);
         setCodeWaiting(true);
+    };
+
+    const handleEmailInput = (evt) => {
+        setEmail(evt.target.value);
     };
 
     useEffect(() => {
@@ -43,7 +49,7 @@ const LoginForm = ({onClose, onLogin}) => {
                         />
                         <h2>Введите почту</h2>
                         <p>Мы отправим одноразовый код.</p>
-                        <input className={ `${styles.emailInput}` } placeholder='ivan.ivanov@mail.ru'/>
+                        <input className={ `${styles.emailInput}` } type='email' placeholder='ivan.ivanov@mail.ru' onChange={handleEmailInput}/>
                         <button className={ `${styles.sender}` } onClick={() => handleLogin(true)}>Отправить код</button>
                         <a href='#' className={ `${styles.logInWithNumber}` }>Войти по номеру телефона</a>
                     </div>
