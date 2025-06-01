@@ -10,7 +10,6 @@ import com.project.marketplace.service.AuthService;
 import com.project.marketplace.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -50,17 +49,17 @@ public class AuthController {
 
     @PostMapping("/confirm")
     @Operation(summary = "Подтверждение OTP и выдача токена сессии")
-    public ResponseEntity<AuthResponse> confirmOtp(@RequestBody @Valid ConfirmOtpRequest confirmRequest,
+    public ResponseEntity<AuthResponse> confirmOtp(
+            @RequestBody @Valid ConfirmOtpRequest confirmRequest,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
-        String sessionId = authService.confirmOtp(confirmRequest.loginId(), confirmRequest.otp(), httpRequest);
 
-        Cookie cookie = new Cookie("SESSION", sessionId);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        httpResponse.addCookie(cookie);
-
-        return ResponseEntity.ok(new AuthResponse(sessionId, "Аутентификация прошла успешно"));
+        String sessionId = authService.confirmOtp(
+                confirmRequest.loginId(),
+                confirmRequest.otp(),
+                httpRequest);
+        return ResponseEntity.ok(
+                new AuthResponse(sessionId, "Аутентификация прошла успешно"));
     }
 
     @PostMapping("/register")
