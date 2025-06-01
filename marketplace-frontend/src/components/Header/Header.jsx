@@ -1,11 +1,15 @@
 "use client"
 import Link from 'next/link';
-import Image from 'next/image';
-import SvgIcon from '../SvgImage';
 import styles from './Header.module.css'
 import LoginForm from '../LoginForm/LoginForm';
 import { useState } from 'react';
 import { useAuth } from '@/hooks/AuthContext';
+import BasketSVG from '@/svg/CartSVG';
+import OrdersSVG from '@/svg/OrdersSVG';
+import SelectionMenuSVG from '@/svg/SelectionMenuSVG';
+import LogoSVG from '@/svg/LogoSVG';
+import SearchSVG from '@/svg/SearchSVG';
+import CartSVG from '@/svg/CartSVG';
 
 const Header = () => {
     const [isLoginFormShown, setIsLoginFormShown] = useState(false);
@@ -25,43 +29,23 @@ const Header = () => {
             <div className={ `${styles.main}` }>
                 <div className={ `${styles.logo}` }>
                     <Link href={'/'}>
-                        <Image 
-                            src='icons/logo.svg'
-                            alt='Logo'
-                            width={50}
-                            height={50}
-                        />
+                        <LogoSVG />
                     </Link>
                 </div>
                 <button className={ `${styles.catalogue}` }>
-                    <SvgIcon
-                        src='icons/selection-menu.svg'
-                    />
+                    <SelectionMenuSVG />
                     Каталог
                 </button>
                 <div className={ `${styles.searchInputContainer}` }>
                     <input className={ `${styles.searchInput}` } type="text" placeholder='Введите название...' />
-                    <SvgIcon 
-                        src='icons/search.svg'
-                        className={ `${styles.searchInputSvg}` }
-                    />
+                    <SearchSVG className={ `${styles.searchInputSvg}` } />
                 </div>
                 <Link className={ `${styles.categoryButton}` } href={'/basket'}>
-                    <Image 
-                        src='icons/basket.svg'
-                        alt='Basket'
-                        width={25}
-                        height={19}
-                    />
+                    <CartSVG />
                     Корзина
                 </Link>
                 <Link className={ `${styles.categoryButton}` } href={'/orders'}>
-                    <Image 
-                        src='icons/orders.svg'
-                        alt='Orders'
-                        width={25}
-                        height={19}
-                    />
+                    <OrdersSVG />
                     Заказы
                 </Link>
                 { (!isAuthenticated) ? 

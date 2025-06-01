@@ -14,9 +14,8 @@ const sendCode = async (email) => {
     fetch(marketApi.AUTH.REGISTER, {
         method: 'POST',
         body: JSON.stringify(requestData),
-        mode: 'no-cors',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         }
     }).then(response => {
         if (!response.ok) {

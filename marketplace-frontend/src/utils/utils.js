@@ -18,4 +18,12 @@ const addDommenToApi = (apiObj, dommen) => {
     return processed;
 };
 
-export {addDommenToApi};
+const getFormattedPrice = (price) => {
+    return price.toString().split('').reverse().join('').match(/.{1,3}/g).join(' ').split('').reverse().join('');
+};
+
+const getRandomInt = (max) => {
+    return Math.floor(Math.random() * max);
+};
+
+export {addDommenToApi, getFormattedPrice, getRandomInt};

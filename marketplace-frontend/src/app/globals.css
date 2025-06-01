@@ -4,6 +4,8 @@
     --secondary-color: rgba(255, 255, 255, 1);
     --font-main-color: rgba(0, 0, 0, 1);
     --font-secondary-color: rgba(255, 255, 255, 1);
+    --font-danger-color: rgba(255, 68, 68, 1);
+    --button-danger-color: rgba(255, 68, 68, 1);
     --button-color: rgba(111, 193, 32, 1);
     --button-secondary-color: rgba(255, 255, 255, 1);
     --input-placheholder-color: rgba(0, 0, 0, 0.5);

@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard/ProductCard";
 
-export default function Home() {
+const Home = () => {
   return (
     <div className={styles.page}>
       <ProductCard />
@@ -17,3 +17,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

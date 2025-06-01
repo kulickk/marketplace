@@ -1,0 +1,120 @@
+.pageHeader {
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--font-main-color);
+}
+
+.pageContentContainer {
+    display: grid;
+    grid-template-columns: minmax(470px, 750px) minmax(230px, 350px);
+    column-gap: 20px;
+    width: 100%;
+}
+
+.goodsSelectionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.selectionTopPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+}
+
+.selectAllInput {
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--input-placheholder-color);
+    border-radius: 6px;
+}
+
+.selectAllInput:hover, .selectAll:hover{
+    cursor: pointer;
+}
+
+.selectAllInput:checked {
+    background-color: var(--main-color);
+    background-image: url('../../../../public/icons/checked.svg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.selectAllContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selectAll {
+    font-size: 14px;
+    user-select: none;
+}
+
+.deleteSelected {
+    font-size: 14px;
+    color: var(--font-danger-color);
+    user-select: none;
+}
+
+.goodsContainer {
+    border-radius: 12px;
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.totalContainer {
+    height: 160px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.totalContainer p {
+    margin: 0;
+}
+
+.totalContainerTitle {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--font-main-color);
+}
+
+.totalPriceContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.totalGoods {
+    font-size: 16px;
+    color: var(--font-main-color);
+}
+
+.totalPrice {
+    font-size: 20px;
+    color: var(--font-main-color);
+}
+
+.checkoutButton {
+    font-size: 14px;
+    width: 100%;
+    padding: 16px 0;
+    border-radius: 8px;
+    border: 1px solid var(--input-placheholder-color);
+    background-color: var(--secondary-color);
+}
