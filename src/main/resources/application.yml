@@ -39,4 +39,8 @@ springdoc:
   show-actuator: true
   cache:
     disabled: true
-
+yookassa:
+  shop-id: 1092526
+  secret-key: test_4vZspT-sTRV11fnt6STWfep9B3vy2NLx3U8-L0F97EE
+file:
+  upload-dir: ./uploads/goods

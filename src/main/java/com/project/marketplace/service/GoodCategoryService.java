@@ -29,8 +29,6 @@ public class GoodCategoryService {
 
     @Transactional(readOnly = true)
     public List<GoodCategoryResponse> getAllCategories() {
-        // Возвращаем только верхнеуровневые категории, затем в ответе включаются
-        // дочерние через mapToResponse
         return repository.findAll().stream()
                 .filter(c -> c.getParent() == null)
                 .map(this::mapToResponse)

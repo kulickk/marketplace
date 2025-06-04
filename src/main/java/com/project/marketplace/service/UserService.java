@@ -48,13 +48,11 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
-        // 3. После сохранения пользователя создаём корзину с его userId
         Basket basket = Basket.builder()
                 .userId(savedUser.getId())
                 .build();
         Basket savedBasket = basketRepository.save(basket);
 
-        // 4. Обновляем пользователя, устанавливая ссылку на корзину
         savedUser.setBasket(savedBasket);
         userRepository.save(savedUser);
 
@@ -72,6 +70,9 @@ public class UserService {
         u.setFirstName(dto.firstName());
         u.setLastName(dto.lastName());
         u.setGender(dto.gender());
+        if (dto.phoneNumber() != null) {
+            u.setPhoneNumber(dto.phoneNumber());
+        }
         return toResponse(userRepository.save(u));
     }
 
@@ -114,8 +115,11 @@ public class UserService {
                 u.getFirstName(),
                 u.getLastName(),
                 u.getGender().name(),
+                u.getRole().name(),
+                u.getPhoneNumber(),
                 u.getCreatedAt(),
-                u.getUpdatedAt());
+                u.getUpdatedAt()
+        );
     }
 
     public User getUserById(UUID id) {

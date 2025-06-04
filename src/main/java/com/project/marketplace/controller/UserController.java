@@ -18,9 +18,6 @@ public class UserController {
 
     private final UserService userService;
 
-    /**
-     * Получение профиля текущего пользователя.
-     */
     @GetMapping
     @Operation(summary = "Получить профиль текущего пользователя")
     public ResponseEntity<UserResponse> getMyProfile(HttpServletRequest request) {
@@ -28,9 +25,6 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
-    /**
-     * Обновление имени, фамилии и пола.
-     */
     @PatchMapping("/profile")
     @Operation(summary = "Обновить имя, фамилию и пол пользователя")
     public ResponseEntity<UserResponse> updateProfile(
@@ -40,9 +34,6 @@ public class UserController {
         return ResponseEntity.ok(updated);
     }
 
-    /**
-     * Смена пароля: нужно указать старый и новый.
-     */
     @PatchMapping("/password")
     @Operation(summary = "Сменить пароль пользователя")
     public ResponseEntity<Void> changePassword(

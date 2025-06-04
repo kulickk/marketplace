@@ -23,10 +23,6 @@ public class BasketController {
 
     private final BasketService basketService;
 
-    /**
-     * Получение корзины текущего пользователя.
-     * Идентификатор пользователя извлекается из HTTP-сессии.
-     */
     @GetMapping
     @Operation(summary = "Получение корзины текущего пользователя")
     public ResponseEntity<BasketResponse> getBasket(HttpServletRequest request) {
@@ -35,9 +31,6 @@ public class BasketController {
         return ResponseEntity.ok(basket);
     }
 
-    /**
-     * Добавление или обновление элемента корзины.
-     */
     @PostMapping("/items")
     @Operation(summary = "Добавление или обновление элемента корзины")
     public ResponseEntity<BasketItemResponse> addOrUpdateItem(HttpServletRequest request,
@@ -47,9 +40,6 @@ public class BasketController {
         return new ResponseEntity<>(item, HttpStatus.CREATED);
     }
 
-    /**
-     * Обновление количества товара в элементе корзины по его ID.
-     */
     @PatchMapping("/items/{basketItemId}")
     @Operation(summary = "Обновление количества товара в элементе корзины")
     public ResponseEntity<BasketItemResponse> updateItem(HttpServletRequest request,
@@ -60,9 +50,6 @@ public class BasketController {
         return ResponseEntity.ok(item);
     }
 
-    /**
-     * Удаление элемента корзины по его ID.
-     */
     @DeleteMapping("/items/{basketItemId}")
     @Operation(summary = "Удаление элемента корзины")
     public ResponseEntity<Void> deleteItem(HttpServletRequest request,
@@ -72,10 +59,6 @@ public class BasketController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Извлекает userId из HTTP-сессии.
-     * Если сессия не существует или не содержит userId, выбрасывается исключение
-     */
     public static UUID extractUserIdFromSession(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
@@ -89,6 +72,13 @@ public class BasketController {
         } catch (IllegalArgumentException ex) {
             throw new IllegalArgumentException();
         }
+    }
+
+    @DeleteMapping("/items")
+    public ResponseEntity<Void> clearBasket(HttpServletRequest request) {
+        UUID userId = extractUserIdFromSession(request);
+        basketService.clearBasket(userId);
+        return ResponseEntity.noContent().build();
     }
 
 }
