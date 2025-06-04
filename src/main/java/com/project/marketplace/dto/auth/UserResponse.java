@@ -6,11 +6,13 @@ import java.util.UUID;
 
 @Schema(description = "Данные пользователя")
 public record UserResponse(
-                UUID id,
-                String email,
-                String firstName,
-                String lastName,
-                String gender,
-                LocalDateTime createdAt,
-                LocalDateTime updatedAt) {
+        UUID id,
+        String email,
+        String firstName,
+        String lastName,
+        String gender,
+        String role,
+        String phoneNumber,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt) {
 }

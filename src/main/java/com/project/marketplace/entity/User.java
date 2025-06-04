@@ -40,15 +40,18 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Gender gender;    // MALE, FEMALE, NOT_STATED
+    private Gender gender; 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Role role;        // BUYER, SELLER, ADMIN
+    private Role role;     
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "basket_id")
     private Basket basket;
+
+    @Column(name = "phone_number", length = 20)
+    private String phoneNumber;
 
     @CreationTimestamp
     @Column(updatable = false)
