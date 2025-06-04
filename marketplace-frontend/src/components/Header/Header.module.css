@@ -38,7 +38,7 @@
 }
 
 .catalogue:hover svg path {
-    fill: var(--font-main-color);
+    fill: var(--button-color);
     transition: all var(--hover-animation-time);
 }
 
@@ -83,10 +83,6 @@
 }
 
 .signInButton {
-    padding: 11px 0;
-    min-width: 150px;
-    max-width: 170px;
-    height: 40px;
-    border-radius: 8px;
-    font-size: 14px;
+    max-width: 150px;
+    min-width: 120px;
 }

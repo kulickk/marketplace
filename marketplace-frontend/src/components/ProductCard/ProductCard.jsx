@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './ProductCard.module.css'
 import Image from 'next/image';
+import { frontendRouter } from '@/utils/const';
 
 const desc = 'Кроссовки Adidas Sportswear CRAZYCasdasdasdasd asdasdasd asdasdas dasdasdasaSD DASDASDASSD';
 
@@ -9,7 +10,7 @@ const ProductCard = () => {
     return (
         <Link 
         className={ `${styles.cardContainer}` }
-        href={'/product/1'}
+        href={frontendRouter.PRODUCT(1)}
         >
             <div className={ `${styles.cardBorder}` }></div>
             <div className={ `${styles.cardWrapper}` }>

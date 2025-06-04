@@ -3,6 +3,7 @@ import ProductCardCart from '@/components/ProductCard/ProductCardInCart/ProductC
 import styles from './page.module.css'
 import { useEffect, useMemo, useState } from 'react';
 import { getFormattedPrice, getRandomInt } from '@/utils/utils';
+import CustomButton from '@/components/CustomButton/CustomButton';
 
 const getGoodsCards = (goods, onSelect, onIncreaseCount, onDecreaseCount, onDelete) => {
     const cards = goods.map(({id, desc, price, selected}) => {
@@ -167,7 +168,7 @@ const Cart = () => {
                         <p className={`${styles.totalGoods}`}>Товары ({selectedGoodsCount})</p>
                         <p className={`${styles.totalPrice}`}>{getFormattedPrice(selectedTotal)} ₽</p>
                     </div>
-                    <button className={`${styles.checkoutButton}`} onClick={() => console.log(selectedGoodsCount, selectedTotal, goods)}>Перейти к оформлению</button>
+                    <CustomButton className={`${styles.checkoutButton}`} onClick={() => console.log(selectedGoodsCount, selectedTotal, goods)}>Перейти к оформлению</CustomButton>
                 </div>
             </div>
         </>

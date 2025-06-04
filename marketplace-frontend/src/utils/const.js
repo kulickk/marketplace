@@ -16,16 +16,25 @@ const marketplaceApi = {
         REGISTER: '/api/v1/auth/register',
         LOGIN: '/api/v1/auth/login',
         CONFIRM: '/api/v1/auth/confirm',
-        CHECK: '/api/v1/auth/some-endpoint'
+        CHECK: '/api/v1/auth/some-endpoint',
+        LOGOUT: '/api/v1/auth/logout'
     },
     USER: {
-        REGISTER: '/api/users/register',
-        GET_BY_ID: (id) => `/api/users/id/${id}`,
-        GET_BY_EMAIL: (email) => `/api/users/email/${email}`
+        PROFILE: '/api/v1/users/me/profile',
+        PASSWORD: '/api/v1/users/me/password',
+        ME: '/api/v1/users/me'
     }
 };
 
 const marketApi = addDommenToApi(marketplaceApi, DOMMEN);
 
+// Forntend Routes
+const frontendRouter = {
+    INDEX: '/',
+    CART: '/my/cart',
+    ORDERS: '/my/orders',
+    PRODUCT: (id) => `/product/${id}`,
+    ME: '/my/account'
+};
 
-export {marketApi}
+export {marketApi, frontendRouter}

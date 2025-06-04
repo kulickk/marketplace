@@ -1,9 +1,9 @@
 import TemplateSVG from "./TemplateSVG";
 
-const LogoSVG = () => {
+const LogoSVG = ({width = 50, height = 50}) => {
     return(
         <TemplateSVG>
-            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width={width} height={height} viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 0H50V16.6667H0V0Z" fill="#FFCE0A"/>
                 <path d="M0 16.6667H50V33.3333H0V16.6667Z" fill="#6FC121"/>
                 <path d="M0 33.3333H50V50H0V33.3333Z" fill="#FFCE0A"/>

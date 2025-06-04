@@ -117,4 +117,5 @@
     border-radius: 8px;
     border: 1px solid var(--input-placheholder-color);
     background-color: var(--secondary-color);
+    height: 50px;
 }

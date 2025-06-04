@@ -1,8 +1,6 @@
 .pageContainer {
-    max-width: 1080px;
-    min-width: 720px;
-    width: 60%;
-    padding: 20px;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    align-items: center;
 }

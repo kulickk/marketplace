@@ -1,10 +1,21 @@
 "use client"
-import { createContext, useState, useContext } from 'react';
+import { marketApi } from '@/utils/const';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    fetch(marketApi.AUTH.CHECK, {
+      credentials: 'include'
+    }).then(response => {
+      if (response.ok) {
+        setIsAuthenticated(true);
+      }
+    })
+  }, []);
 
   return (
     <AuthContext.Provider 

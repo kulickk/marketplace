@@ -1,15 +1,12 @@
-import { marketApi } from "@/utils/const";
+import { marketApi } from '@/utils/const';
 
-const sendCode = async (email) => {
+const sendCode = async (email, setLoginId) => {
     const requestData = {
-            "email": email,
-            "password": "Qwerty123!",
-            "firstName": "Иван",
-            "lastName": "Петров"
+            'email': email,
+            'password': 'Qwerty123!',
+            'firstName': 'Иван',
+            'lastName': 'Петров'
         };
-
-    console.log(requestData);
-    console.log(JSON.stringify(requestData));
 
     fetch(marketApi.AUTH.REGISTER, {
         method: 'POST',
@@ -18,12 +15,23 @@ const sendCode = async (email) => {
             'Content-Type': 'application/json',
         }
     }).then(response => {
+        console.log(response);
         if (!response.ok) {
-            return response.json().then(errorData => {
-                const error = new Error(errorData.message || 'HTTP Error');
-                error.status = response.status;
-                throw error;
-            });
+            if (response.status === 409) {
+                const {firstName, lastName, ...requestDataLogin} = requestData;
+                fetch(marketApi.AUTH.LOGIN, {
+                    method: 'POST',
+                    body: JSON.stringify(requestDataLogin),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(response => {
+                    if (response.ok && (response.status !== 429)) {
+                        return response.json();
+                    }
+                    throw new Error('Too many requests');
+                }).then(data => setLoginId(data.loginId));
+            }
         }
 
         return response.json();
