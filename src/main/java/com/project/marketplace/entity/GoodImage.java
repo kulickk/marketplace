@@ -3,17 +3,16 @@ package com.project.marketplace.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.UUID;
 
 @Entity
-@Table(name = "basket")
+@Table(name = "good_images")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Basket {
+public class GoodImage {
 
     @Id
     @GeneratedValue
@@ -21,10 +20,10 @@ public class Basket {
     @Column(columnDefinition = "UUID")
     private UUID id;
 
-    @Column(nullable = false, unique = true)
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "good_id", nullable = false)
+    private Good good;
 
-    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<BasketItem> items = new ArrayList<>();
+    @Column(name = "image_path", length = 255, nullable = false)
+    private String imagePath;
 }

@@ -5,8 +5,13 @@ import com.project.marketplace.dto.basket.BasketItemResponse;
 import com.project.marketplace.dto.basket.BasketResponse;
 import com.project.marketplace.entity.Basket;
 import com.project.marketplace.entity.BasketItem;
+import com.project.marketplace.entity.Good;
+import com.project.marketplace.entity.GoodImage;
 import com.project.marketplace.repository.BasketItemRepository;
 import com.project.marketplace.repository.BasketRepository;
+import com.project.marketplace.repository.GoodImageRepository;
+import com.project.marketplace.repository.GoodsRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,10 +27,9 @@ public class BasketService {
 
     private final BasketRepository basketRepository;
     private final BasketItemRepository basketItemRepository;
+    private final GoodsRepository goodsRepository;
+    private final GoodImageRepository goodImageRepository;
 
-    /**
-     * Получает корзину пользователя по userId. Если корзина не существует, создаёт новую.
-     */
     @Transactional
     public BasketResponse getBasket(UUID userId) {
         Basket basket = basketRepository.findByUserId(userId)
@@ -33,12 +37,14 @@ public class BasketService {
                     Basket newBasket = Basket.builder().userId(userId).build();
                     return basketRepository.save(newBasket);
                 });
-        return mapToBasketResponse(basket);
+
+        List<BasketItemResponse> items = basketItemRepository.findByBasketId(basket.getId()).stream()
+                .map(this::mapToBasketItemResponse)
+                .collect(Collectors.toList());
+
+        return new BasketResponse(basket.getId(), items);
     }
 
-    /**
-     * Добавляет новый элемент в корзину или обновляет количество, если такой элемент уже существует.
-     */
     @Transactional
     public BasketItemResponse addOrUpdateBasketItem(UUID userId, BasketItemRequest request) {
         Basket basket = basketRepository.findByUserId(userId)
@@ -47,14 +53,11 @@ public class BasketService {
                     return basketRepository.save(newBasket);
                 });
 
-        // Ищем элемент с заданным товаром в корзине
         BasketItem basketItem = basketItemRepository.findByBasketIdAndGoodId(basket.getId(), request.goodId())
                 .orElse(null);
         if (basketItem != null) {
-            // Обновляем количество
             basketItem.setQuantity(request.quantity());
         } else {
-            // Создаем новый элемент
             basketItem = BasketItem.builder()
                     .basket(basket)
                     .goodId(request.goodId())
@@ -66,9 +69,6 @@ public class BasketService {
         return mapToBasketItemResponse(savedItem);
     }
 
-    /**
-     * Обновляет количество товара у элемента корзины по его ID.
-     */
     @Transactional
     public BasketItemResponse updateBasketItem(UUID userId, UUID basketItemId, BasketItemRequest request) {
         BasketItem basketItem = basketItemRepository.findById(basketItemId)
@@ -81,9 +81,6 @@ public class BasketService {
         return mapToBasketItemResponse(savedItem);
     }
 
-    /**
-     * Удаляет элемент корзины по его ID.
-     */
     @Transactional
     public void deleteBasketItem(UUID userId, UUID basketItemId) {
         BasketItem basketItem = basketItemRepository.findById(basketItemId)
@@ -94,14 +91,33 @@ public class BasketService {
         basketItemRepository.delete(basketItem);
     }
 
-    private BasketItemResponse mapToBasketItemResponse(BasketItem item) {
-        return new BasketItemResponse(item.getId(), item.getGoodId(), item.getQuantity());
+    @Transactional
+    public void clearBasket(UUID userId) {
+        Basket basket = basketRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Корзина не найдена"));
+        List<BasketItem> items = basketItemRepository.findByBasketId(basket.getId());
+        basketItemRepository.deleteAll(items);
     }
 
-    private BasketResponse mapToBasketResponse(Basket basket) {
-        List<BasketItemResponse> items = basket.getItems().stream()
-                .map(this::mapToBasketItemResponse)
-                .collect(Collectors.toList());
-        return new BasketResponse(basket.getId(), items);
+    private BasketItemResponse mapToBasketItemResponse(BasketItem item) {
+        UUID goodId = item.getGoodId();
+
+        Good good = goodsRepository.findById(goodId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "Товар с id " + goodId + " не найден"));
+
+        String name = good.getName();
+        java.math.BigDecimal price = good.getPrice();
+
+        List<GoodImage> images = goodImageRepository.findByGoodId(goodId);
+        String firstImagePath = images.isEmpty() ? null : images.get(0).getImagePath();
+
+        return new BasketItemResponse(
+                item.getId(),
+                goodId,
+                item.getQuantity(),
+                name,
+                price,
+                firstImagePath);
     }
 }
