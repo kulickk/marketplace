@@ -1,6 +1,5 @@
 package com.project.marketplace.service;
 
-import com.project.marketplace.dto.basket.BasketItemResponse;
 import com.project.marketplace.dto.order.OrderItemDto;
 import com.project.marketplace.dto.order.OrderRequest;
 import com.project.marketplace.dto.order.OrderResponse;

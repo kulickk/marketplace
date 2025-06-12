@@ -1,6 +1,5 @@
 package com.project.marketplace.controller;
 
-import com.project.marketplace.dto.auth.ErrorResponse;
 import com.project.marketplace.dto.goods.GoodRequest;
 import com.project.marketplace.dto.goods.GoodResponse;
 import com.project.marketplace.entity.Good;
