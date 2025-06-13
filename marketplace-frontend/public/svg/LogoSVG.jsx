@@ -1,0 +1,25 @@
+import TemplateSVG from "./TemplateSVG";
+
+const LogoSVG = ({width = 50, height = 50}) => {
+    return(
+        <TemplateSVG>
+            <svg width={width} height={height} viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0H50V16.6667H0V0Z" fill="#FFCE0A"/>
+                <path d="M0 16.6667H50V33.3333H0V16.6667Z" fill="#6FC121"/>
+                <path d="M0 33.3333H50V50H0V33.3333Z" fill="#FFCE0A"/>
+                <path d="M16.6667 16.6667L0 0H16.6667V16.6667Z" fill="#EAC019"/>
+                <path d="M50 50L33.3333 33.3333H50V50Z" fill="#EAC019"/>
+                <path d="M16.6667 33.3333L0 50H16.6667V33.3333Z" fill="#EAC019"/>
+                <path d="M50 0L33.3333 16.6667H50V0Z" fill="#EAC019"/>
+                <path d="M50 16.6667L33.3333 33.3333H50V16.6667Z" fill="#68B51F"/>
+                <path d="M16.6667 16.6667L0 33.3333H16.6667V16.6667Z" fill="#68B51F"/>
+                <path d="M33.3334 33.3333L16.6667 16.6667H33.3334V33.3333Z" fill="#68B51F"/>
+                <rect x="16.6667" y="8.33333" width="16.6667" height="8.33333" fill="white"/>
+                <path d="M25 33.3333V25V16.6667H33.3333L25 25L33.3333 33.3333H25Z" fill="white"/>
+                <rect x="16.6667" y="33.3333" width="16.6667" height="8.33333" fill="white"/>
+            </svg>
+        </TemplateSVG>
+    );
+};
+
+export default LogoSVG;

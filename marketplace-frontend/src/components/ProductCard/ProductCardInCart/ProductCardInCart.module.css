@@ -1,0 +1,162 @@
+.cardContainer {
+    
+}
+
+.cardContainer p {
+    margin: 0;
+}
+
+.cardBorder {
+    /* display: none; */
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(rgba(111, 193, 33, 1), rgba(255, 206, 10, 1));
+    animation: rotate-gradient 3s linear infinite;
+    top: -20%;
+    left: -70%;
+}
+
+.cardWrapper {
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    min-width: 200px;
+    max-width: 710px;
+    width: 100%;
+}
+
+.cardImage {
+    border-radius: 10px;
+    width: 90px;
+    height: 120px;
+    display: block;
+}
+
+.cardInner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cardInnerLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardName {
+    font-size: 16px;
+    align-self: self-start;
+}
+
+.cardCounterContainer {
+    position: relative;
+    width: 97px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--input-placheholder-color);
+    border-radius: 6px;
+    flex: none;
+}
+
+.increase, .decrease {
+    background: none;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+}
+
+.increase {
+    background-image: url('../../../../public/icons/increase.svg');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    right: 5px;
+}
+
+.counter {
+    width: 100%;
+    text-align: center;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: var(--font-main-color);
+}
+
+.counter::-webkit-outer-spin-button,
+.counter::-webkit-inner-spin-button {
+    appearance: none;
+}
+
+.decrease {
+    background-image: url('../../../../public/icons/decrease.svg');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    left: 5px;
+}
+
+.counterInactive {
+
+}
+
+.counterInactive .decrease, .counterInactive .increase {
+    display: none;
+}
+
+.price {
+    font-size: 20px;
+    color: var(--font-main-color);
+}
+
+.selectionContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.delete, .select {
+    width: 30px;
+    height: 30px;
+
+}
+
+.delete {
+    border-radius: 6px;
+}
+
+.delete:hover {
+    cursor: pointer;
+    background-color: var(--button-danger-color);
+    transition: all var(--hover-animation-time);
+}
+
+.delete:hover svg path {
+    fill: var(--button-secondary-color);
+    transition: all var(--hover-animation-time);
+}
+
+.select {
+    margin: 0;
+    appearance: none;
+    border-radius: 6px;
+    border: 1px solid var(--input-placheholder-color);
+}
+
+.select:hover {
+    cursor: pointer;
+}
+
+.select:checked {
+    background-color: var(--main-color);
+    background-image: url('../../../../public/icons/checked.svg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.goodImageNone {
+    background-color: var(--background-shadinп-color);
+}

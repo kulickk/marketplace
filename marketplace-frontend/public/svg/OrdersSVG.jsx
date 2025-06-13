@@ -1,0 +1,13 @@
+import TemplateSVG from "./TemplateSVG";
+
+const OrdersSVG = () => {
+    return(
+        <TemplateSVG>
+            <svg width="24" height="19" viewBox="0 0 24 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 6L5 0H24L22 2C22 2 20.5 2 20 2H5.5L3 5H17V7H2V17H17V7V5L20 2C20.5 2 22 2 22 2V4L19 7V16L22 13V2L24 0V14L19 19H0V6Z" fill="white"/>
+            </svg>
+        </TemplateSVG>
+    );
+};
+
+export default OrdersSVG;

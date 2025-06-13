@@ -2,7 +2,7 @@ import './globals.css'
 import Header from "@/components/Header/Header";
 import styles from './layout.module.css'
 import localFont from 'next/font/local';
-import { AuthProvider } from '@/hooks/AuthContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const geologica = localFont({
   src: [

@@ -1,0 +1,14 @@
+.page {
+    max-width: 1080px;
+    min-width: 720px;
+    width: 100%;
+    column-gap: 12px;
+    row-gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    margin-top: 25px;
+    padding: 20px;
+    box-sizing: border-box;
+}

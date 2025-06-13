@@ -1,76 +1,3 @@
-/* .relativeCardContainer {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    padding: 10px;
-    width: fit-content;
-    display: flex;
-    justify-content: center;
-}
-
-.relativeCardContainer:hover .cardBorder {
-    display: block;
-}
-
-.relativeCardContainer:hover .price{
-    mix-blend-mode:screen;
-}
-
-.cardBorder {
-    display: none;
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: linear-gradient(rgba(111, 193, 33, 1), rgba(255, 206, 10, 1));
-    animation: rotate-gradient 3s linear infinite;
-    top: -10%;
-    left: -70%;
-}
-
-@keyframes rotate-gradient {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.cardContainer {
-    position: relative;
-    max-width: 17s0px;
-    max-height: 270px;
-    border-radius: 8px;
-}
-
-.cardContainer p {
-    margin: 0;
-}
-
-.cardImageContainer {
-    display: block;
-}
-
-.cardImageContainer, .title, .price {
-    position: relative;
-    background-color: var(--secondary-color);
-    
-}
-
-.price {
-    width: 150px;
-    font-size: 16px;
-    font-weight: 700;
-
-}
-
-.title {
-    width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px;
-} */
-
 .cardBorder {
     display: none;
     position: absolute;
@@ -132,6 +59,8 @@
 }
 
 .cardImage {
+    width: 150px;
+    height: 200px;
     border-radius: var(--border-radius);
 }
 
@@ -155,4 +84,8 @@
 .cardImageContainer, .title, .price {
     padding-right: 8px;
     padding-left: 8px;
+}
+
+.goodImageNone {
+    background-color: var(--background-shadinп-color);
 }

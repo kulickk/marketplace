@@ -1,0 +1,69 @@
+.section {
+    position: absolute;
+    z-index: 100000;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 110px;
+    background-color: var(--background-shadinп-color);
+}
+
+.catalogueContainer {
+    width: 60%;
+    max-width: 1080px;
+    min-width: 720px;
+    padding: 20px;
+}
+
+.catalogueList {
+    width: 200px;
+    background-color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 12px 0 0 0;
+}
+
+.catalogueListItem {
+    padding: 10px 16px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.catalogueSubMenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    list-style: none;
+    max-width: 250px;
+    width: 100%;
+    min-width: 200px;
+    background-color: var(--secondary-color);
+    margin: 0;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.catalogueListItem > .catalogueSubMenu {
+    display: none;
+}
+
+.catalogueListItem:has(.catalogueSubMenu .catalogueListItem:hover) {
+    background-color: var(--main-color);
+    color: var(--font-secondary-color);
+}
+
+.catalogueListItem:hover {
+    background-color: var(--catalogue-hover-list-item-color);
+}
+
+.catalogueListItem:hover > .catalogueSubMenu {
+    display: block;
+}

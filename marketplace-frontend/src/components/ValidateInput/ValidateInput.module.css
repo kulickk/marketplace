@@ -1,0 +1,17 @@
+.validationContainer {
+    width: 100%;
+    max-width: 300px;
+    min-width: 200px;
+}
+
+.messagesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.message {
+    color: var(--error-color);
+    margin: 0;
+}
