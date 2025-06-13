@@ -1,5 +1,6 @@
 package com.project.marketplace.controller;
 
+import com.project.marketplace.dto.admin.AdminOrderDto;
 import com.project.marketplace.dto.admin.AdminUserDto;
 import com.project.marketplace.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -54,5 +55,13 @@ public class AdminController {
         adminService.checkIsAdmin(user);
         adminService.promoteToSeller(userIdToPromote);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<List<AdminOrderDto>> getAllOrders(HttpServletRequest request) {
+        UUID me = getCurrentUserId(request);
+        adminService.checkIsAdmin(me);
+        List<AdminOrderDto> orders = adminService.listAllOrders();
+        return ResponseEntity.ok(orders);
     }
 }
