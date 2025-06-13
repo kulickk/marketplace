@@ -59,6 +59,8 @@
 }
 
 .cardImage {
+    width: 150px;
+    height: 200px;
     border-radius: var(--border-radius);
 }
 
@@ -82,4 +84,8 @@
 .cardImageContainer, .title, .price {
     padding-right: 8px;
     padding-left: 8px;
+}
+
+.goodImageNone {
+    background-color: var(--background-shadinп-color);
 }

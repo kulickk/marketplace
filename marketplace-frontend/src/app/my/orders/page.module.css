@@ -1,0 +1,14 @@
+.pageHeader {
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--font-main-color);
+}
+
+.pageContentContainer {
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

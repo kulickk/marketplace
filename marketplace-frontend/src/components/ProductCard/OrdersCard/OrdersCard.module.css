@@ -1,0 +1,111 @@
+.orderContainer {
+    
+}
+
+.orderContainer p {
+    margin: 0;
+}
+
+.orderBorder {
+    /* display: none; */
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(rgba(111, 193, 33, 1), rgba(255, 206, 10, 1));
+    animation: rotate-gradient 3s linear infinite;
+    top: -20%;
+    left: -70%;
+}
+
+.orderWrapper {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.orderWrapper:hover {
+    border: 2px solid black;
+}
+
+.orderInfoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 108px;
+}
+
+.orderDate {
+    font-size: 16px;
+}
+
+.orderInfoFooter {
+    display: flex;
+} 
+
+.orderPrice {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.orderInfoHeader {
+    display: flex;
+    gap: 10px;
+}
+
+.orderInfoHeaderContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.orderNumber {
+    font-size: 14px;
+}
+
+.orderStatus {
+    padding: 4px 14px;
+    background-color: var(--order-status-collecting);
+    box-sizing: border-box;
+    border-radius: 6px;
+    width: auto;
+    max-height: 26px;
+}
+
+.orderStatusName {
+    text-align: center;
+    font-size: 14px;
+    color: var(--font-secondary-color);
+}
+
+.orderGoodsCount {
+    font-size: 16px;
+    align-self: center;
+}
+
+.orderInfoFooterSpliter {
+    margin: 0 10px;
+    align-self: center;
+}
+
+.goodsContainer {
+    height: 120px;
+}
+
+.goodsList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+.goodPhoto {
+    width: 90px;
+    height: 120px;
+    border-radius: 10px;
+}

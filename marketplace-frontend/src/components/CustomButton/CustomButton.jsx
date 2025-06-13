@@ -1,7 +1,7 @@
 import styles from './CustomButton.module.css';
 import React from 'react';
 
-const CustomButton = ({children, onClick, className}) => {
+const CustomButton = ({children, onClick, className, disabled}) => {
     const isTextOnly = React.Children.toArray(children).every(child => {
         return typeof child === 'string' || typeof child === 'number';
     });
@@ -11,7 +11,8 @@ const CustomButton = ({children, onClick, className}) => {
     return(
         <button 
         onClick={onClick} 
-        className={ `${styles.customButton} ${className}` }>
+        className={ `${styles.customButton} ${className}` }
+        disabled={disabled}>
             <span 
             className={ `${styles.buttonText}` }>
                 {children}

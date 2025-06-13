@@ -4,19 +4,25 @@ import styles from './page.module.css'
 import { useEffect, useMemo, useState } from 'react';
 import { getFormattedPrice, getRandomInt } from '@/utils/utils';
 import CustomButton from '@/components/CustomButton/CustomButton';
+import { createOrder, deleteFromCart, getCartGoods, updateCartQuantity } from '@/utils/requests';
+import { redirect } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 const getGoodsCards = (goods, onSelect, onIncreaseCount, onDecreaseCount, onDelete) => {
-    const cards = goods.map(({id, desc, price, selected}) => {
+    const cards = goods.map(({id, goodId, name, price, imagePath, quantity, selected}) => {
         return(
             <ProductCardCart
             id={id}
-            desc={desc}
+            goodId={goodId}
+            desc={name}
             price={price}
             onSelect={onSelect}
             onIncreaseCount={onIncreaseCount}
             onDecreaseCount={onDecreaseCount}
             onDelete={onDelete}
             selected={selected}
+            imagePath={imagePath}
+            quantity={quantity}
             key={id}
             />
         );
@@ -24,39 +30,20 @@ const getGoodsCards = (goods, onSelect, onIncreaseCount, onDecreaseCount, onDele
     return cards;
 };
 
-const goodsMock = [
-    {
-        id: '1',
-        desc: 'Кроссовки Adidas Sportswear CRAZYCdasasdasdas dasdasdasdasdasdasdasd asdasdasdasdasd asdasddasasdasdasdasddas',
-        price: getRandomInt(10000),
-    },
-    {
-        id: '2',
-        desc: 'Кроссовки Adidas Sportswear JDKLASJKS',
-        price: getRandomInt(10000),
-    },
-    {
-        id: '3',
-        desc: 'Кроссовки Adidas Sportswear EIOPWA',
-        price: getRandomInt(10000),
-    },
-    {
-        id: '4',
-        desc: 'Кроссовки Adidas Sportswear BVCJN<M',
-        price: getRandomInt(10000),
-    }
-];
-
 const Cart = () => {
     const [goods, setGoods] = useState([]);
     const [selectedTotal, setSelectedTotal] = useState(0);
     const [selectedGoodsCount, setSelectedGoodsCount] = useState(0);
+    const {cartCount, setCartCount, setOrdersCount} = useAuth();
+
+    console.log(selectedTotal, selectedGoodsCount);
 
     const countTotal = (goodsList) => {
         let total = 0;
         goodsList.forEach(good => {
             if (good.selected) {
-                total += good.price * good.count
+                console.log(good.price * good.count);
+                total += good.price * good.count;
             }
         });
         setSelectedTotal(total);
@@ -106,11 +93,13 @@ const Cart = () => {
 
     const increaseGoodCount = (goodId) => {
         setGoods(goods.map(good => {
+            console.log(good);
             if ((good.id !== goodId) || (good.count + 1 > 999)) return good;
             if (good.selected) {
                 setSelectedTotal(selectedTotal + good.price);
                 setSelectedGoodsCount(selectedGoodsCount + 1);
             }
+            updateCartQuantity({id: good.id, goodId: good.goodId, quantity: (good.count + 1)});
             return { ...good, count: good.count + 1 };
         }))
     };
@@ -122,23 +111,39 @@ const Cart = () => {
                 setSelectedTotal(selectedTotal - good.price);
                 setSelectedGoodsCount(selectedGoodsCount - 1);
             }
+            updateCartQuantity({id: good.id, goodId: good.goodId, quantity: (good.count - 1)});
             return { ...good, count: good.count - 1 };
         }))
     };
 
-    const deleteGood = (goodId) => {
-        const goodsFilteredList = goods.filter(good => good.id !== goodId);
+    const handleDeleteGood = (id) => {
+        const goodsFilteredList = goods.filter(good => good.id !== id);
         setGoods(goodsFilteredList);
         countSelectedGoods(goodsFilteredList);
         countTotal(goodsFilteredList);
+        setCartCount(prevCartCount => prevCartCount - 1);
     };
 
+    const deleteGood = ({id, goodId}) => {
+        deleteFromCart({id, goodId, handleDeleteGood});
+    };
+
+    const handleCreateOrder = (evt) => {
+        evt.preventDefault();
+        const goodIds = []
+        goods.map(good => {
+            if (good.selected) {
+                goodIds.push(good.id);
+            }
+        });
+        console.log(goodIds);
+        createOrder({goodIds, redirect, setOrdersCount});
+    };
+
+    console.log(goods);
+
     useEffect(() => {
-        setGoods(goodsMock.map(good => ({
-            ...good,
-            selected: false,
-            count: 1
-        })))
+        getCartGoods({setGoods});
     }, [])
 
     const allSelected = useMemo(() => {
@@ -159,7 +164,7 @@ const Cart = () => {
                         <a href='#' className={`${styles.deleteSelected}`} onClick={handleDeleteSelected}>Удалить выбранные</a>
                     </div>
                     <div className={`${styles.goodsContainer}`}>
-                        {getGoodsCards(goods, handleCardToggle, increaseGoodCount, decreaseGoodCount, deleteGood)}
+                        { (cartCount > 0) ? getGoodsCards(goods, handleCardToggle, increaseGoodCount, decreaseGoodCount, deleteGood) : <div className={`${styles.message}`}>Корзина пуста</div> }
                     </div>
                 </div>
                 <div className={`${styles.totalContainer}`}>
@@ -168,7 +173,7 @@ const Cart = () => {
                         <p className={`${styles.totalGoods}`}>Товары ({selectedGoodsCount})</p>
                         <p className={`${styles.totalPrice}`}>{getFormattedPrice(selectedTotal)} ₽</p>
                     </div>
-                    <CustomButton className={`${styles.checkoutButton}`} onClick={() => console.log(selectedGoodsCount, selectedTotal, goods)}>Перейти к оформлению</CustomButton>
+                    <CustomButton className={`${styles.checkoutButton}`} onClick={handleCreateOrder} disabled={(selectedGoodsCount === 0)}>Перейти к оформлению</CustomButton>
                 </div>
             </div>
         </>

@@ -30,6 +30,9 @@
 
 .cardImage {
     border-radius: 10px;
+    width: 90px;
+    height: 120px;
+    display: block;
 }
 
 .cardInner {
@@ -72,7 +75,7 @@
     background-image: url('../../../../public/icons/increase.svg');
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    left: 5px;
+    right: 5px;
 }
 
 .counter {
@@ -94,7 +97,15 @@
     background-image: url('../../../../public/icons/decrease.svg');
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    right: 5px;
+    left: 5px;
+}
+
+.counterInactive {
+
+}
+
+.counterInactive .decrease, .counterInactive .increase {
+    display: none;
 }
 
 .price {
@@ -144,4 +155,8 @@
     background-image: url('../../../../public/icons/checked.svg');
     background-position: 50% 50%;
     background-repeat: no-repeat;
+}
+
+.goodImageNone {
+    background-color: var(--background-shadinп-color);
 }

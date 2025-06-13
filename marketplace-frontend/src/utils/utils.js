@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+import { ORDER_DATE_FORMAT } from "./const";
+
 const addDommenToApi = (apiObj, dommen) => {
     const processed = {};
 
@@ -26,4 +29,26 @@ const getRandomInt = (max) => {
     return Math.floor(Math.random() * max);
 };
 
-export {addDommenToApi, getFormattedPrice, getRandomInt};
+const getOrderDate = (date) => dayjs(date).format(ORDER_DATE_FORMAT);
+
+const getGoodsCount = (count) => {
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+  
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+    return `${count} товаров`;
+  }
+  
+  switch (lastDigit) {
+    case 1:
+      return `${count} товар`;
+    case 2:
+    case 3:
+    case 4:
+      return `${count} товара`;
+    default:
+      return `${count} товаров`;
+  }
+};
+
+export {addDommenToApi, getFormattedPrice, getRandomInt, getOrderDate, getGoodsCount};

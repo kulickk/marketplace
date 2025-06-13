@@ -25,7 +25,18 @@
     display: block;
 }
 
+.goodImageGalleryItem {
+    width: 100px;
+    height: 133px;
+}
+
 .activeGoodImage {
+    width: 430px;
+    height: 573px;
+}
+
+.activeGoodImageNone {
+    background-color: var(--background-shadinп-color);
 }
 
 .galleryContainer {
@@ -34,8 +45,18 @@
 }
 
 .galleryListContainer {
+    --image-border-radius: 10px;
     height: 573px;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    background-color: var(--bg-site-color);
+    max-height: fit-content;
+    align-self: center;
+    padding: 5px;
+    border-radius: var(--image-border-radius);
+}
+
+.galleryListContainer::-webkit-scrollbar {
+    width: 0;
 }
 
 .galleryList {
@@ -48,7 +69,32 @@
 }
 
 .galleryItem {
+    cursor: pointer;
+    border-radius: 10px;
+    position: relative;
+}
 
+.galleryItem::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: var(--unactive-image-color);
+    border-radius: var(--image-border-radius);
+    z-index: 2;
+}
+
+.galleryItem:hover::after {
+    background-color: inherit;
+}
+
+.galleryItem[data-active=true]::after {
+    background-color: inherit;
+}
+
+.galleryItem img {
+    display: block;
 }
 
 .goodInfoContainer {

@@ -34,8 +34,13 @@
     background: linear-gradient(to left, rgba(111, 193, 33, 1), rgba(255, 206, 10, 1));
 }
 
-.customButton:hover {
+.customButton:hover:not(:disabled) {
     color: var(--font-secondary-color);
+    border: none;
+}
+
+.customButton:hover:disabled {
+    cursor: auto;
 }
 
 @keyframes animationHoverAfter {
@@ -56,13 +61,13 @@
     }
 }
 
-.customButton:hover::after {
+.customButton:hover:not(:disabled)::after {
     visibility: initial;
     animation: 1s linear animationHoverAfter infinite;
     animation-direction: alternate;
 }
 
-.customButton:hover::before {
+.customButton:hover:not(:disabled)::before {
     visibility: initial;
     animation: 1s linear animationHoverBefore infinite;
     animation-direction: alternate;

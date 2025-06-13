@@ -1,3 +1,12 @@
+.pageContainer {
+    max-width: 1080px;
+    min-width: 720px;
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
 .pageHeader {
     font-weight: 700;
     font-size: 32px;
@@ -20,14 +29,26 @@
 
 .selectionTopPanel {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px 20px;
     background-color: var(--secondary-color);
     border-radius: 10px;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.selectAllInput {
+.paymentTypeTitle {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--font-main-color);
+    margin: 0;
+}
+
+.paymentTypeContainer {
+    display: flex;
+    gap: 20px;
+}
+
+/* .selectAllInput {
     appearance: none;
     width: 30px;
     height: 30px;
@@ -37,13 +58,6 @@
 
 .selectAllInput:hover, .selectAll:hover{
     cursor: pointer;
-}
-
-.selectAllInput:checked {
-    background-color: var(--main-color);
-    background-image: url('../../../../public/icons/checked.svg');
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
 }
 
 .selectAllContainer {
@@ -61,7 +75,7 @@
     font-size: 14px;
     color: var(--font-danger-color);
     user-select: none;
-}
+} */
 
 .goodsContainer {
     border-radius: 12px;
@@ -118,18 +132,4 @@
     border: 1px solid var(--input-placheholder-color);
     background-color: var(--secondary-color);
     height: 50px;
-}
-/* 
-.checkoutButton:hover:not(:disabled) {
-    background-color: var(--button-color);
-    color: var(--font-secondary-color);
-}
-
-.checkoutButton:disabled:hover {
-    cursor: auto;
-} */
-
-.message {
-    margin-left: auto;
-    margin-right: auto;
 }

@@ -1,29 +1,26 @@
 import Link from 'next/link';
 import styles from './ProductCard.module.css'
-import Image from 'next/image';
-import { frontendRouter } from '@/utils/const';
+import { marketApi, frontendRouter } from '@/utils/const';
+import { getFormattedPrice } from '@/utils/utils';
 
-const desc = 'Кроссовки Adidas Sportswear CRAZYCasdasdasdasd asdasdasd asdasdas dasdasdasaSD DASDASDASSD';
 
-const ProductCard = () => {
-    const title = desc.slice(0, 34) + '...';
+const ProductCard = ({id, name, price, images}) => {
+    const title = (name.length > 34) ? name.slice(0, 34) + '...' : name;
+    const newPrice = Math.floor(price);
     return (
         <Link 
         className={ `${styles.cardContainer}` }
-        href={frontendRouter.PRODUCT(1)}
+        href={frontendRouter.PRODUCT(id)}
         >
             <div className={ `${styles.cardBorder}` }></div>
             <div className={ `${styles.cardWrapper}` }>
                 <div className={ `${styles.cardImageContainer}` }>
-                    <Image 
-                    className={ `${styles.cardImage}` }
-                    src='/images/product.jpg'
-                    alt='Product'
-                    width={150}
-                    height={200}
-                    />
+                    { (images && images[0]) ? <img className={ `${styles.cardImage}` } src={ marketApi.GET_GOOD_PHOTO(images[0]) } /> : 
+                    <div className={ `${styles.cardImage} ${styles.goodImageNone}` }></div>
+                    }
+                    {/* <img className={ `${styles.cardImage}` } src={ marketApi.GET_GOOD_PHOTO(images[0]) } width={150} height={200}/> */}
                 </div>
-                <p className={ `${styles.price}` }>1 777 ₽</p>
+                <p className={ `${styles.price}` }>{getFormattedPrice(newPrice)} ₽</p>
                 <p className={ `${styles.title}` }>{ title }</p>
             </div>
         </Link>

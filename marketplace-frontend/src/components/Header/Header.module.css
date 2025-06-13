@@ -42,6 +42,10 @@
     transition: all var(--hover-animation-time);
 }
 
+.catalogueContainer {
+    position: absolute;
+}
+
 .searchInputContainer {
     position: relative;
     min-width: fit-content;
@@ -64,6 +68,12 @@
     top: 12px;
 }
 
+.categoryButtonContainer {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
 .categoryButton {
     color: var(--font-secondary-color);
     font-size: 10px;
@@ -72,6 +82,21 @@
     align-items: center;
     height: 32px;
     justify-content: space-between;
+}
+
+.categoryCount {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.categoryCount p {
+    margin: 0;
 }
 
 .basket {
