@@ -1,21 +1,22 @@
 'use client'
 import styles from './page.module.css'
-import { useEffect, useState } from 'react';
-import { getFormattedPrice, getRandomInt } from '@/utils/utils';
-import ProductCardCart from '@/components/ProductCard/ProductCardInCart/ProductCardInCart';
 import { getOrders } from '@/utils/requests';
 import OrdersCard from '@/components/ProductCard/OrdersCard/OrdersCard';
+import { useEffect, useState } from 'react';
 
 
 const getOrdersTemplate = (orders) => {
-    console.log(orders);
     return orders.map((order) => {
+        console.log(order.orderPaymentStatus);
         return(
             <OrdersCard
             key={order.orderId}
             id={order.orderId}
             price={order.totalAmount}
             createdAt={order.createdAt}
+            paymentStatus={order.orderPaymentStatus}
+            paymentMessage={order.paymentCancelReason}
+            paymentToken={order.paymentUrl}
             items={order.items}
             />
         );
@@ -29,8 +30,7 @@ const Orders = () => {
         getOrders({setOrders});
     }, [])
 
-    if (orders.length > 0) {
-        console.log(orders);
+    if (orders) {
         return(
         <>
             <h1 className={`${styles.pageHeader}`}>Заказы</h1>

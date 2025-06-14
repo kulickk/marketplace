@@ -3,12 +3,13 @@
 import CustomButton from '@/components/CustomButton/CustomButton';
 import styles from './page.module.css'
 import ValidateInput from '@/components/ValidateInput/ValidateInput';
-import { createGood, getCategories, getMyGoods, getUsers, logout, promoteSeller } from '@/utils/requests';
+import { createGood, getCategories, getMyGoods, getSellerOrders, getUsers, logout, promoteSeller } from '@/utils/requests';
 import { redirect, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { ACCOUNT_CONTENT, USER_ROLE, USER_ROLE_NAME } from '@/utils/const';
+import { ACCOUNT_CONTENT, ORDER_DATE_FORMAT, USER_ROLE, USER_ROLE_NAME } from '@/utils/const';
 import { useEffect, useRef, useState } from 'react';
 import { getFormattedPrice } from '@/utils/utils';
+import dayjs from 'dayjs';
 
 // const validationObj = {
 //         NAME: [
@@ -26,6 +27,7 @@ import { getFormattedPrice } from '@/utils/utils';
 //             }
 //         ]
 //     };
+
 const getCategoriestemplate = (categories) => {
     return categories.map(category => {
         return(
@@ -61,6 +63,18 @@ const getNewGoodPhotos = (photos) => {
     return Array.from(photos).map((photo, index) => {
         return(
             <img key={index} src={URL.createObjectURL(photo)} alt="Превью фото" />
+        );
+    });
+};
+
+const getOrdersTemplate = (orders) => {
+    return orders.map((order, index) => {
+        return(
+            <div key={index} className={ `${styles.orderLine}` }>
+                <div>{dayjs(order.createdAt).format(ORDER_DATE_FORMAT)}</div>
+                <div>{order.totalAmount}</div>
+                <div>{order.items.length}</div>
+            </div>
         );
     });
 };
@@ -252,6 +266,20 @@ const getCurrentContent = (currentContent, props) => {
                 <button className={ `${styles.promoteSellerButton}` } onClick={handlePromoteSeller} disabled={(userRole !== USER_ROLE.USER) || (userRole === null)}>Сделать продавцом</button>
                 </>
             );
+        case ACCOUNT_CONTENT.ORDERS:
+            const {orders} = props;
+            return(
+                <div>
+                    <div className={ `${styles.orderLine}` }>
+                        <div>Дата</div>
+                        <div>Стоимость заказа</div>
+                        <div>Количество товаров</div>
+                    </div>
+                    <div className={ `${styles.ordersContainer}`}>
+                        {getOrdersTemplate(orders)}
+                    </div>
+                </div>
+            );
     }
 };
 
@@ -269,6 +297,7 @@ const getProfileRoutes = (userRole, currentContent) => {
                 <>
                 <li className={ `${styles.navListItem}` }><a data-content={ACCOUNT_CONTENT.PRESONAL_INFORMATION} href='#' className={ `${styles.navListItemLink} ${ (currentContent === ACCOUNT_CONTENT.PRESONAL_INFORMATION) ? styles.navListItemActive : '' }` }>Личная информация</a></li>
                 <li className={ `${styles.navListItem}` }><a data-content={ACCOUNT_CONTENT.MY_GOODS} href='#' className={ `${styles.navListItemLink} ${ (currentContent === ACCOUNT_CONTENT.MY_GOODS) ? styles.navListItemActive : '' }` }>Мои товары</a></li>
+                <li className={ `${styles.navListItem}` }><a data-content={ACCOUNT_CONTENT.ORDERS} href='#' className={ `${styles.navListItemLink} ${ (currentContent === ACCOUNT_CONTENT.ORDERS) ? styles.navListItemActive : '' }` }>Заказы</a></li>
                 <li className={ `${styles.navListItem}` }><a data-content={ACCOUNT_CONTENT.ANALITICS} href='#' className={ `${styles.navListItemLink} ${ (currentContent === ACCOUNT_CONTENT.ANALITICS) ? styles.navListItemActive : '' }` }>Аналитика</a></li>
                 </>
             );
@@ -296,6 +325,7 @@ const Profile = () => {
     const goodQuantity = useRef();
     const goodCategory = useRef();
     const goodDescription = useRef();
+    const [orders, setOrders] = useState(null);
     // ADMIN
     const [users, setUsers] = useState(null);
     const [seletedUser, setSeletedUser] = useState(null);
@@ -344,6 +374,7 @@ const Profile = () => {
         if (userRole === USER_ROLE.SELLER) {
             getMyGoods({setMyGoods});
             getCategories({setCategories});
+            getSellerOrders({setOrders});
         } else if (userRole === USER_ROLE.ADMIN) {
             getUsers({setUsers});
         }
@@ -370,7 +401,13 @@ const Profile = () => {
                 <button className={ `${styles.logoutButton}` } onClick={handleLogout}>Выйти</button>
             </div>
             <div className={ `${styles.currentContentContainer}` }>
-                {getCurrentContent(currentContent, {handleSave, myGoods, isCreateGoodFormOpen, setIsCreateGoodFormOpen, users, setSeletedUser, seletedUser, handleSelectUserClick, handlePromoteSeller, goodName, goodPhoto, goodPrice, goodQuantity, goodCategory, goodDescription, categories})}
+                {getCurrentContent(currentContent, 
+                    {handleSave, myGoods, isCreateGoodFormOpen, 
+                    setIsCreateGoodFormOpen, users, setSeletedUser, 
+                    seletedUser, handleSelectUserClick, handlePromoteSeller, 
+                    goodName, goodPhoto, goodPrice, 
+                    goodQuantity, goodCategory, goodDescription, 
+                    categories, orders})}
             </div>
         </div>
         </>

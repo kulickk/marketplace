@@ -1,6 +1,31 @@
 import { getFormattedPrice, getGoodsCount, getOrderDate } from "@/utils/utils";
 import styles from './OrdersCard.module.css';
-import { marketApi } from "@/utils/const";
+import { frontendRouter, marketApi, PAYMENT_STATUS, PAYMENT_STATUS_MESSAGE, PAYMENT_STATUS_TEXT } from "@/utils/const";
+import CustomButton from "@/components/CustomButton/CustomButton";
+import { redirect } from "next/navigation";
+
+const getOrderStatus = (status) => {
+    switch(status) {
+        case status === PAYMENT_STATUS_TEXT.pending:
+            return(
+                <>
+                <p className={ `${styles.orderStatusName}` }>Ожидает оплаты</p>
+                </>
+            );
+        case status === PAYMENT_STATUS_TEXT.canceled:
+            return(
+                <>
+                <p className={ `${styles.orderStatusName}` }></p>
+                </>
+            );
+        case status === PAYMENT_STATUS_TEXT.succeeded:
+            return(
+                <>
+                <p className={ `${styles.orderStatusName}` }>Оплачен</p>
+                </>
+            );
+    }
+};
 
 const getGoods = (goods) => {
     const slicedGoods = goods.slice(0, 4);
@@ -11,7 +36,7 @@ const getGoods = (goods) => {
     });
 };
 
-const OrdersCard = ({price, createdAt, items}) => {
+const OrdersCard = ({price, createdAt, paymentStatus, paymentMessage, paymentToken, items}) => {
     const newPrice = Math.floor(price);
     const goodsCount = items.length;
     return(
@@ -22,10 +47,11 @@ const OrdersCard = ({price, createdAt, items}) => {
                     <div className={ `${styles.orderInfoHeader}` }>
                         <div className={ `${styles.orderInfoHeaderContainer}` }>
                             <p className={ `${styles.orderDate}` }>Заказ от {getOrderDate(createdAt)}</p>
-                            <p className={ `${styles.orderNumber}` }>номер заказа</p>
+                            <p className={ `${styles.orderNumber}` }>{PAYMENT_STATUS_MESSAGE[paymentMessage]}</p>
+                            { (paymentStatus === PAYMENT_STATUS.PENDING) ? <CustomButton onClick={() => redirect(frontendRouter.PAYMENT(paymentToken))}>Оплатить</CustomButton> : '' }
                         </div>
-                        <div className={ `${styles.orderStatus}` }>
-                            <p className={ `${styles.orderStatusName}` }>Ожидает оплаты</p>
+                        <div className={ `${styles.orderStatus} ${(paymentStatus === PAYMENT_STATUS.SUCCEEDED) ? styles.statusSuccess : ''} ${(paymentStatus === PAYMENT_STATUS.CANCELED) ? styles.statusDanger : ''}` }>
+                            <p className={ `${styles.orderStatusName}` }>{PAYMENT_STATUS_TEXT[paymentStatus]}</p>
                         </div>
                     </div>
                     <div className={ `${styles.orderInfoFooter}` }>

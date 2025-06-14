@@ -1,4 +1,4 @@
-const { marketApi, frontendRouter, USER_ROLE } = require("./const");
+const { marketApi, frontendRouter, USER_ROLE, PAYMENT_STATUS } = require("./const");
 
 const logout = (redirect, isAuthentificated, setUserRole, setCartCount, setOrdersCount) => {
     fetch(marketApi.AUTH.LOGOUT, {
@@ -140,17 +140,33 @@ const updateCartQuantity = ({id, goodId, quantity}) => {
     });
 };
 
-const getOrders = ({setOrders}) => {
-    fetch(marketApi.ORDERS.GET, {
-        credentials: 'include'
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-    }).then(data => {
-        console.log(data);
-        setOrders(data);
-    });
+const getOrderPaymentStatus = async (paymentId) => {
+    const paymentResponse = await fetch(marketApi.PAYMENT.CHECK(paymentId));
+    if (!paymentResponse.ok) throw new Error('Failed to fetch payment status');
+    const payment = await paymentResponse.json();
+    return [payment.status, (payment.status === PAYMENT_STATUS.CANCELED) ? payment.cancellation_details.reason: null];
+};
+
+const getOrders = async ({ setOrders }) => {
+    try {
+        const ordersResponse = await fetch(marketApi.ORDERS.GET, 
+            {
+                credentials: 'include'
+            });
+        const orders = await ordersResponse.json();
+        
+        const extendedOrders = await Promise.all(
+            Array.from(orders).map(async (order) => {
+                try {
+                    const [paymentStatus, paymentCancelReason = null] = await getOrderPaymentStatus(order.paymentId);
+                    return {...order, orderPaymentStatus: paymentStatus, paymentCancelReason: paymentCancelReason};
+                } catch {}
+            })
+        );
+        setOrders(extendedOrders);
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const getMyGoods = ({setMyGoods}) => {
@@ -287,6 +303,16 @@ const createGood = ({good, images}) => {
             })
         });
     });
-}; 
+};
 
-export {logout, getGoods, getCategories, getCartGoods, getProductInfo, addToCart, deleteFromCart, createOrder, updateCartQuantity, getOrders, getMyGoods, getUsers, promoteSeller, getUserInfo, getGoodsByName, getGoodsByCategory, createGood}
+const getSellerOrders = ({setOrders}) => {
+    fetch(marketApi.SELLER.ORDERS, {
+        credentials: 'include'
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+    }).then(data => setOrders(data))
+};
+
+export {logout, getGoods, getCategories, getCartGoods, getProductInfo, addToCart, deleteFromCart, createOrder, updateCartQuantity, getOrders, getMyGoods, getUsers, promoteSeller, getUserInfo, getGoodsByName, getGoodsByCategory, createGood, getSellerOrders}

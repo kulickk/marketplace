@@ -351,3 +351,18 @@
     width: 60px;
     height: 80px;
 }
+
+.ordersContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.orderLine {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr; 
+}
+
+.orderLine > div {
+    text-align: center;
+}
