@@ -81,7 +81,7 @@ const CheckOutPage = () => {
                         <h2 className={`${styles.paymentTypeTitle}`}>Способ получения</h2>
                     </div>
                     <div className={`${styles.goodsContainer}`}>
-                        {getGoodsCards(goods)}
+                        {/* {getGoodsCards(goods)} */}
                     </div>
                 </div>
                 <div className={`${styles.totalContainer}`}>

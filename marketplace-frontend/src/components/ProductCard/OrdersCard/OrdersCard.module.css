@@ -109,3 +109,15 @@
     height: 120px;
     border-radius: 10px;
 }
+
+.statusDanger {
+    background-color: var(--error-color);
+}
+
+.statusWarning {
+    background-color: var(--warning-color);
+}
+
+.statusSuccess {
+    background-color: var(--success-color);
+}

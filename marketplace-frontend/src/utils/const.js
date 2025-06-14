@@ -44,6 +44,12 @@ const marketApi = {
     ADMIN: {
         PROMOTE_SELLER: (id) => `${DOMMEN}/api/v1/admin/users/${id}/promote-seller`,
         USERS: `${DOMMEN}/api/v1/admin/users`
+    },
+    PAYMENT: {
+        CHECK: (paymentId) => `${DOMMEN}/api/v1/payments/${paymentId}`
+    },
+    SELLER: {
+        ORDERS: `${DOMMEN}/api/v1/seller/orders`
     }
 };
 
@@ -55,7 +61,8 @@ const frontendRouter = {
     PRODUCT: (id) => `/product/${id}`,
     ME: `/my/account`,
     SEARCH: (product) => `/search/${product}`,
-    SEARCH_CATEGORY: (category) => `/category-search/${category}`
+    SEARCH_CATEGORY: (category) => `/category-search/${category}`,
+    PAYMENT: (paymentToken) => `/payment/${paymentToken}`
 };
 
 
@@ -76,7 +83,8 @@ const ACCOUNT_CONTENT = {
     REVIEWS: 'REVIEWS',
     MY_GOODS: 'MY_GOODS',
     ANALITICS: 'ANALITICS',
-    USERS: 'USERS'
+    USERS: 'USERS',
+    ORDERS: 'ORDERS'
 };
 
 const MY_GOOD_FORM = {
@@ -84,4 +92,22 @@ const MY_GOOD_FORM = {
     CREATE: 'CREATE'
 }
 
-export {marketApi, frontendRouter, ORDER_DATE_FORMAT, USER_ROLE, USER_ROLE_NAME, ACCOUNT_CONTENT}
+const PAYMENT_STATUS = {
+    PENDING: 'pending',
+    CANCELED: 'canceled',
+    SUCCEEDED: 'succeeded'
+};
+
+const PAYMENT_STATUS_TEXT = {
+    pending: 'Ожидает оплаты',
+    canceled: 'Отменён',
+    succeeded: 'Оплачен'
+};
+
+const PAYMENT_STATUS_MESSAGE = {
+    'expired_on_confirmation': 'Не оплачен вовремя'
+};
+
+const PAYMENT_RETURN_URL = 'http://localhost:3000' + frontendRouter.ORDERS;
+
+export {marketApi, frontendRouter, ORDER_DATE_FORMAT, USER_ROLE, USER_ROLE_NAME, ACCOUNT_CONTENT, PAYMENT_RETURN_URL, PAYMENT_STATUS_TEXT, PAYMENT_STATUS, PAYMENT_STATUS_MESSAGE}
